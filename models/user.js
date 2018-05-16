@@ -21,6 +21,10 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
     minLength: 6
+  },
+  image:{
+    type: String,
+    required: true
   }
 })
 
