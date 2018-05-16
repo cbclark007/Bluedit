@@ -4,7 +4,7 @@ const authRoutes = express.Router();
 const {body, validationResult} = require('express-validator/check');
 const {matchedData} = require('express-validator/filter');
 const bcrypt = require('bcryptjs');
-const {validateUser} = require('../middleware/middlware.js');
+const {validateUser} = require('../middleware/middleware.js');
 
 const User = require('../models/user.js');
 
@@ -84,9 +84,9 @@ authRoutes.post('/login', (req, res) => {
     })
 })
 
-authRoutes.post('/logout') {
+authRoutes.post('/logout', (req, res) => {
   res.session.userID = undefined;
   res.redirect('/login');
-}
+})
 
-module.exports = {authRoutes};
+module.exports = authRoutes;
