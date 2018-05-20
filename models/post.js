@@ -11,14 +11,14 @@ const postSchema = mongoose.Schema({
     type: String,
     required: true,
     minLength: 1
-  },
-  comments: {
-    type: Object,
-    required: true
   }
+  // comments: {
+  //   type: Object,
+  //   required: true
+  // }
 })
 
 
-const Post = mongoose.model('Post', userSchema);
+const Post = mongoose.model('Post', postSchema);
 
 module.exports = {Post};

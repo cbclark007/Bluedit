@@ -1,14 +1,27 @@
-<form action="/login" method="post">
-  <p>
-    <input type="text" name="username" placeholder="Username">
-  </p>
-  <p>
-    <input type="text" name="email" placeholder="Email">
-  </p>
-  <p>
-    <input type="password" name="password" placeholder="Password">
-  </p>
-  <p>
-    <input type="submit">
-  </p>
-</form>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/master.css">
+  </head>
+  <body>
+    {{> signup}}
+
+    <h1>Register</h1>
+    <form action="/register" method="post">
+      <p>
+        <input type="text" name="username" placeholder="Username">
+      </p>
+      <p>
+        <input type="text" name="email" placeholder="Email">
+      </p>
+      <p>
+        <input type="password" name="password" placeholder="Password">
+      </p>
+      <p>
+        <input type="submit">
+      </p>
+    </form>
+  </body>
+</html>

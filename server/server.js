@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars');
 const morgan = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
+const hbs = require('hbs');
 require('dotenv').config();
 
 const authRoute = require('../routes/authRoutes.js');
@@ -19,6 +20,7 @@ app.set('views', path.join(__dirname, '../views'));
 app.engine('hbs', exphbs({defaultLayout : 'main',
                           extname       : '.hbs'}))
 app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, "../views/partials"));
 
 // Middleware
 app.use(session({
@@ -38,7 +40,7 @@ app.use((req, res, next) => {
 })
 
 app.get('/', (req, res) => {
-  res.render('home');
+  res.redirect('home');
 })
 
 // Mount Routes

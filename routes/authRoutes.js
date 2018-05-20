@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const {validateUser} = require('../middleware/middleware.js');
 
 const User = require('../models/user.js');
+const Post = require('../models/post.js');
 
 authRoutes.get('/home', validateUser, (req, res) => {
   res.render('home');
@@ -34,6 +35,7 @@ authRoutes.post('/register', [
     .withMessage('Username must be at least 4 characters')
   ],
   (req, res) => {
+    console.log("did i get here");
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
       const errorMessages = errors.array().map(obj => {
@@ -88,5 +90,24 @@ authRoutes.post('/logout', (req, res) => {
   res.session.userID = undefined;
   res.redirect('/login');
 })
+
+//All the post stuff
+authRoutes.get('/post', validateUser, (req, res) => {
+  res.render('post');
+})
+
+authRoutes.post('/post', (req, res) => {
+    const postData = matchedData(req);
+    const post = new Post(postData);
+    post.save()
+      .then(user => {
+        res.redirect('/home')
+      }).catch(e => {
+        console.log(e);
+        res.redirect('/home');
+      })
+  }
+)
+
 
 module.exports = authRoutes;

@@ -10,8 +10,9 @@ header{
   display: flex;
 }
 .UpperBar{
-  font-size: 40px;
+  font-size: 30px;
   border: solid;
+  padding:0;
 }
 .Sign-in div{
   display: flex;
@@ -23,4 +24,13 @@ header{
   background-color: orange;
   border-radius: 4px;
   margin: 10px;
+}
+
+.btn {
+  height: 40px;
+  width: 60px;
+  background-color: orange;
+  border-radius: 4px;
+  margin: 10px;
+  text-decoration:none;
 }
