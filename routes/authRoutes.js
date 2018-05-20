@@ -10,7 +10,14 @@ const User = require('../models/user.js');
 const Post = require('../models/post.js');
 
 authRoutes.get('/home', validateUser, (req, res) => {
-  res.render('home');
+  Post.find()
+    .then(posts => {
+      console.log("getting posts");
+      console.log(posts);
+      res.render('home', {posts});
+    }).catch(e => {
+      console.log("idk");
+    })
 })
 
 authRoutes.get('/login', (req, res) => {
@@ -97,8 +104,10 @@ authRoutes.get('/post', validateUser, (req, res) => {
 })
 
 authRoutes.post('/post', (req, res) => {
-    const postData = matchedData(req);
-    const post = new Post(postData);
+    const post = new Post({
+      title:req.body.title,
+      content:req.body.content
+    });
     post.save()
       .then(user => {
         res.redirect('/home')

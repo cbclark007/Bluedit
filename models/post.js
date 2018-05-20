@@ -4,13 +4,17 @@ const postSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
     minLength: 1
   },
   content: {
     type: String,
     required: true,
     minLength: 1
+  },
+  posterName: {
+    type:String,
+    required:true
   }
   // comments: {
   //   type: Object,
@@ -21,4 +25,4 @@ const postSchema = mongoose.Schema({
 
 const Post = mongoose.model('Post', postSchema);
 
-module.exports = {Post};
+module.exports = Post;
