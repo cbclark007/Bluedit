@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="/css/master.css">
   </head>
   <body>
+    {{> logout}}
+
     <h1>Make a post</h1>
 
     <form class="" action="/post" method="post">
@@ -17,6 +20,7 @@
       <textarea name="content" rows="10" cols="30" required></textarea>
 
       <br>
+      <input class="hidden" type="text" name="posterName" value={{username}}>
 
       <input type="submit">
     </form>

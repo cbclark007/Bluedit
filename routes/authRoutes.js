@@ -12,9 +12,8 @@ const Post = require('../models/post.js');
 authRoutes.get('/home', validateUser, (req, res) => {
   Post.find()
     .then(posts => {
-      console.log("getting posts");
-      console.log(posts);
-      res.render('home', {posts});
+      var reversedPosts = posts.reverse();
+      res.render('home', {posts: reversedPosts});
     }).catch(e => {
       console.log("idk");
     })
@@ -94,19 +93,28 @@ authRoutes.post('/login', (req, res) => {
 })
 
 authRoutes.post('/logout', (req, res) => {
-  res.session.userID = undefined;
+  req.session.userID = undefined;
   res.redirect('/login');
 })
 
 //All the post stuff
 authRoutes.get('/post', validateUser, (req, res) => {
-  res.render('post');
+  User.findOne({"_id":req.session.userID})
+    .then(user => {
+      res.render('post', {username: user.username});
+    })
+
 })
 
 authRoutes.post('/post', (req, res) => {
+
     const post = new Post({
       title:req.body.title,
-      content:req.body.content
+      content:req.body.content,
+      posterName:req.body.posterName,
+      upvotes:['a'],
+      downvotes:['a'],
+      netvotes:0
     });
     post.save()
       .then(user => {
@@ -118,5 +126,68 @@ authRoutes.post('/post', (req, res) => {
   }
 )
 
+authRoutes.post('/upvote/:id', validateUser, (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  Post.findOne({"_id":id})
+    .then(post => {
+      console.log(post);
+      var currUpVotes = post.upvotes;
+      var currDownVotes = post.downvotes;
+
+      var shouldUpdate = true;
+
+      for(var i = 0; i < currUpVotes.length; i++) {
+        if(currUpVotes[i] == req.session.userID) {
+          shouldUpdate = false;
+        }
+      }
+      for(var i = 0; i < currDownVotes.length; i++) {
+        if(currDownVotes[i] == req.session.userID) {
+          shouldUpdate = false;
+        }
+      }
+
+      console.log("outside the shits");
+
+      if(shouldUpdate) {
+        currUpVotes.push(req.session.userID);
+        var newNetVotes = post.netvotes + 1;
+
+        console.log(currUpVotes);
+        console.log(newNetVotes);
+        console.log("this shud update");
+        console.log(id);
+        Post.updateOne(
+          {
+            "_id": id
+          },
+          {
+            $set: {
+                    upvotes:currUpVotes,
+                    netvotes: newNetVotes
+                  }
+          },
+          {
+            returnOriginal:false
+          }
+        ).then(post => {
+          console.log("hi?");
+          res.redirect('/home');
+        }).catch(e => {
+          console.log(e);
+          res.status(400).send();
+        })
+      } else {
+        res.redirect('/home');
+      }
+    }).catch(e => {
+      console.log(e);
+    })
+})
+
 
 module.exports = authRoutes;
+
+//authRoutes
+//post.js

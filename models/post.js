@@ -4,7 +4,7 @@ const postSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
-    // unique: true,
+    unique: true,
     minLength: 1
   },
   content: {
@@ -14,6 +14,18 @@ const postSchema = mongoose.Schema({
   },
   posterName: {
     type:String,
+    required:true
+  },
+  upvotes: {
+    type: Array,
+    required: true
+  },
+  downvotes: {
+    type: Array,
+    required: true
+  },
+  netvotes: {
+    type:Number,
     required:true
   }
   // comments: {
