@@ -115,3 +115,9 @@ a{
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
+
+.postform {
+  margin:0px auto;
+  width:200px;
+  text-align:left;
+}
