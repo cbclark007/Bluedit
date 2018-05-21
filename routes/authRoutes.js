@@ -13,7 +13,11 @@ authRoutes.get('/home', validateUser, (req, res) => {
   Post.find()
     .then(posts => {
       var reversedPosts = posts.reverse();
-      res.render('home', {posts: reversedPosts});
+      res.render('home',
+        {
+          posts: reversedPosts,
+          username: req.session.username
+        });
     }).catch(e => {
       console.log("idk");
     })
@@ -76,6 +80,7 @@ authRoutes.post('/login', (req, res) => {
           .then(matches => {
             if(matches) {
               req.session.userID = user._id;
+              req.session.username = user.username;
               res.redirect('/home');
             } else {
               req.flash('errorMessages', {message: 'The password you entered does not match the email inputted.'});
@@ -94,6 +99,7 @@ authRoutes.post('/login', (req, res) => {
 
 authRoutes.post('/logout', (req, res) => {
   req.session.userID = undefined;
+  req.session.username = undefined;
   res.redirect('/login');
 })
 
@@ -128,10 +134,8 @@ authRoutes.post('/post', (req, res) => {
 
 authRoutes.post('/upvote/:id', validateUser, (req, res) => {
   const id = req.params.id;
-  console.log(id);
   Post.findOne({"_id":id})
     .then(post => {
-      console.log(post);
       var currUpVotes = post.upvotes;
       var currDownVotes = post.downvotes;
 
@@ -148,16 +152,9 @@ authRoutes.post('/upvote/:id', validateUser, (req, res) => {
         }
       }
 
-      console.log("outside the shits");
-
       if(shouldUpdate) {
         currUpVotes.push(req.session.userID);
         var newNetVotes = post.netvotes + 1;
-
-        console.log(currUpVotes);
-        console.log(newNetVotes);
-        console.log("this shud update");
-        console.log(id);
         Post.updateOne(
           {
             "_id": id
@@ -172,7 +169,56 @@ authRoutes.post('/upvote/:id', validateUser, (req, res) => {
             returnOriginal:false
           }
         ).then(post => {
-          console.log("hi?");
+          res.redirect('/home');
+        }).catch(e => {
+          console.log(e);
+          res.status(400).send();
+        })
+      } else {
+        res.redirect('/home');
+      }
+    }).catch(e => {
+      console.log(e);
+    })
+})
+
+authRoutes.post('/downvote/:id', validateUser, (req, res) => {
+  const id = req.params.id;
+  Post.findOne({"_id":id})
+    .then(post => {
+      var currUpVotes = post.upvotes;
+      var currDownVotes = post.downvotes;
+
+      var shouldUpdate = true;
+
+      for(var i = 0; i < currUpVotes.length; i++) {
+        if(currUpVotes[i] == req.session.userID) {
+          shouldUpdate = false;
+        }
+      }
+      for(var i = 0; i < currDownVotes.length; i++) {
+        if(currDownVotes[i] == req.session.userID) {
+          shouldUpdate = false;
+        }
+      }
+
+      if(shouldUpdate) {
+        currDownVotes.push(req.session.userID);
+        var newNetVotes = post.netvotes - 1;
+        Post.updateOne(
+          {
+            "_id": id
+          },
+          {
+            $set: {
+                    downvotes:currDownVotes,
+                    netvotes: newNetVotes
+                  }
+          },
+          {
+            returnOriginal:false
+          }
+        ).then(post => {
           res.redirect('/home');
         }).catch(e => {
           console.log(e);
