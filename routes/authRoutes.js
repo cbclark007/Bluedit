@@ -45,7 +45,6 @@ authRoutes.post('/register', [
     .withMessage('Username must be at least 4 characters')
   ],
   (req, res) => {
-    console.log("did i get here");
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
       const errorMessages = errors.array().map(obj => {

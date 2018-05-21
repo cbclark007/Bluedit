@@ -23,5 +23,12 @@
         <input type="submit">
       </p>
     </form>
+
+    {{#each errorMessages}}
+      <p>{{message}}</p>
+    {{/each}}
+    {{#each successMessage}}
+      <p>{{message}}</p>
+    {{/each}}
   </body>
 </html>
