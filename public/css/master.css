@@ -36,7 +36,7 @@ a{
 .btn {
   height: 40px;
   width: 60px;
-  background-color: orange;
+  background-color: lightblue;
   border-radius: 4px;
   margin: 10px;
   text-decoration:none;
@@ -68,7 +68,7 @@ a{
 
 .postusername {
   margin-left:10px;
-  padding-top:5px;
+  padding-top:25px;
 }
 
 .postcontent {
