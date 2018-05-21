@@ -111,6 +111,19 @@ authRoutes.get('/post', validateUser, (req, res) => {
 
 })
 
+authRoutes.get('/profile/:id', (req, res) => {
+  Post.find({"posterName":req.params.id})
+    .then(posts => {
+      var reversedPosts = posts.reverse();
+      res.render('profile',
+        {
+          posts: reversedPosts,
+          username: req.session.username
+        });
+    }).catch(e => {
+      console.log("idk");
+    })
+})
 authRoutes.post('/post', (req, res) => {
 
     const post = new Post({
