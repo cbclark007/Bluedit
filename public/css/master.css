@@ -9,6 +9,13 @@ header{
 .Sign-in{
   display: flex;
 }
+a{
+  text-decoration:none;
+  color: black;
+}
+.title{
+  color: blue;
+}
 .UpperBar{
   font-size: 30px;
   border: solid;
@@ -21,7 +28,7 @@ header{
   text-decoration:none;
   height: 40px;
   width: 60px;
-  background-color: orange;
+  background-color: lightblue;
   border-radius: 4px;
   margin: 10px;
 }
