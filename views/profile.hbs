@@ -1,0 +1,23 @@
+{{> logout}}
+
+{{#each posts as |post|}}
+  <div class="post">
+    <div class="votes">
+      <form action="/upvote/{{post._id}}" method="post">
+        <button type="submit">&#9650;</button>
+      </form>
+      <p>{{post.netvotes}}</p>
+      <form action="/downvote/{{post._id}}" method="post">
+        <button type="submit">&#9660;</button>
+      </form>
+    </div>
+
+    <div class="mainarea">
+      <div class="postheader">
+        <h2 class="posttitle">{{post.title}}</h2>
+        <a href="/profile/{{posterName}}" class="postusername"> Posted by: {{post.posterName}}</a>
+      </div>
+      <p class="postcontent">{{post.content}}</p>
+      </div>
+    </div>
+{{/each}}
