@@ -1,5 +1,7 @@
 body {
   text-align: center;
+  margin: 0;
+  border: 0;
 }
 
 header{
@@ -18,7 +20,6 @@ a{
 }
 .UpperBar{
   font-size: 30px;
-  border: solid;
   padding:0;
 }
 .Sign-in div{
@@ -41,7 +42,10 @@ a{
   margin: 10px;
   text-decoration:none;
 }
-
+.right{
+  text-align: right;
+  width: 100%;
+}
 .hidden {
   display:none;
 }
@@ -115,9 +119,24 @@ a{
   background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
   text-decoration: none;
 }
+.postbody {
+  width: 50%;
+}
 
+.postscontainer{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .postform {
   margin:0px auto;
   width:200px;
   text-align:left;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: yellow;
 }

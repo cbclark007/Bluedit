@@ -5,33 +5,41 @@
     <title></title>
   </head>
   <body>
-    {{> logout}}
+    <div class="right">
+      <div class="">
+        {{> logout}}
+      </div>
+    </div>
+
 
     <a href="/post" class="postbutton">Make a Post</a>
+    <section class = "postscontainer">
+      <div class="topofposts">
+        <h2>Posts:</h2>
+      </div>
+      {{#each posts as |post|}}
+        <section class = "postbody">
+          <div class="post">
+            <div class="votes">
+              <form action="/upvote/{{post._id}}" method="post">
+                <button type="submit">&#9650;</button>
+              </form>
+              <p>{{post.netvotes}}</p>
+              <form action="/downvote/{{post._id}}" method="post">
+                <button type="submit">&#9660;</button>
+              </form>
+            </div>
 
-    <div class="topofposts">
-      <h2>Posts:</h2>
-    </div>
-    {{#each posts as |post|}}
-      <div class="post">
-        <div class="votes">
-          <form action="/upvote/{{post._id}}" method="post">
-            <button type="submit">&#9650;</button>
-          </form>
-          <p>{{post.netvotes}}</p>
-          <form action="/downvote/{{post._id}}" method="post">
-            <button type="submit">&#9660;</button>
-          </form>
-        </div>
-
-        <div class="mainarea">
-          <div class="postheader">
-            <h2 class="posttitle">{{post.title}}</h2>
-            <a href="/profile/{{posterName}}" class="postusername">Posted by: {{post.posterName}}</a>
-          </div>
-          <p class="postcontent">{{post.content}}</p>
-          </div>
-        </div>
+            <div class="mainarea">
+              <div class="postheader">
+                <h2 class="posttitle">{{post.title}}</h2>
+                <a href="/profile/{{posterName}}" class="postusername">Posted by: {{post.posterName}}</a>
+              </div>
+              <p class="postcontent">{{post.content}}</p>
+              </div>
+            </div>
+      </section>
     {{/each}}
+  </section>
   </body>
 </html>
