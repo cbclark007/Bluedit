@@ -22,22 +22,22 @@
           <div class="post">
             <div class="votes">
               <form action="/upvote/{{post._id}}" method="post">
-                <button type="submit">&#9650;</button>
+                <button type="submit" class="upvotebtn">&#9650;</button>
               </form>
               <p>{{post.netvotes}}</p>
               <form action="/downvote/{{post._id}}" method="post">
-                <button type="submit">&#9660;</button>
+                <button type="submit" class="downvotebtn">&#9660;</button>
               </form>
             </div>
 
-            <div class="mainarea">
+            <div class="mainarea" class="wordwrap">
               <div class="postheader">
                 <h2 class="posttitle">{{post.title}}</h2>
                 <a href="/profile/{{posterName}}" class="postusername">Posted by: {{post.posterName}}</a>
               </div>
-              <p class="postcontent">{{post.content}}</p>
-              </div>
+              <p class="postcontent" class="wordwrap">{{post.content}}</p>
             </div>
+          </div>
       </section>
     {{/each}}
   </section>
